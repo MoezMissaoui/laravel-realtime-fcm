@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FcmToken;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use FCM;
 
 class NotificationController extends Controller
 {
@@ -16,7 +22,10 @@ class NotificationController extends Controller
 
     public function store(Request $request)
     {
-        Notification::create();
+        $notif = Notification::create();
+
+        $this->broadcast($notif);
+
         return response()->json([
             'data' => ['notif' => true],
             'status' => 200,
@@ -28,5 +37,31 @@ class NotificationController extends Controller
     {
         $notifications = Notification::latest()->get();
         return view('notifications.show', compact('notifications'));
+    }
+
+
+    private function broadcast($notif)
+    {
+        $optionBuilder = new OptionsBuilder();
+        $optionBuilder->setTimeToLive(60*20);
+
+        $notificationBuilder = new PayloadNotificationBuilder("Notification $notif->id");
+        $notificationBuilder->setBody($notif->content)
+                            ->setSound('default');
+                            // ->setClickAction('http://127.0.0.1:8000//');
+
+        $dataBuilder = new PayloadDataBuilder();
+        $dataBuilder->addData($notif->toArray());
+
+        $option = $optionBuilder->build();
+        $notification = $notificationBuilder->build();
+        $data = $dataBuilder->build();
+
+        // You must change it to get your tokens
+        $tokens = FcmToken::pluck('token')->toArray();
+
+        $downstreamResponse = FCM::sendTo($tokens, $option, $notification, $data);
+
+        return $downstreamResponse->numberSuccess();
     }
 }

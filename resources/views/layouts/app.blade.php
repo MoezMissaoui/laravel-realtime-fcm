@@ -67,7 +67,7 @@
                             <a class="nav-link" href="{{ route('fire-notification') }}">{{ __('Fire notification') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('show-notification') }}">{{ __('Show notification') }}</a>
+                            <a class="nav-link" href="{{ route('show-notifications') }}">{{ __('Show notifications') }}</a>
                         </li>
                         <!-- Authentication Links -->
                         @guest

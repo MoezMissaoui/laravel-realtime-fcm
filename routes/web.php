@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/fire-notification', [App\Http\Controllers\NotificationController::class, 'fire'])->name('fire-notification');
-Route::get('/show-notification', [App\Http\Controllers\NotificationController::class, 'show'])->name('show-notification');
-Route::post('/store-notification', [App\Http\Controllers\NotificationController::class, 'store'])->name('store-notification');
+
+Route::get('/notification/fire', [App\Http\Controllers\NotificationController::class, 'fire'])->name('fire-notification');
+Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'show'])->name('show-notifications');
+Route::post('/notification/store', [App\Http\Controllers\NotificationController::class, 'store'])->name('store-notification');

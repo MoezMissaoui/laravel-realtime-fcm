@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/fire-notification', [App\Http\Controllers\NotificationController::class, 'fire_notification'])->name('fire-notification');
+Route::post('/get-notification', [App\Http\Controllers\NotificationController::class, 'get_notification'])->name('get-notification');

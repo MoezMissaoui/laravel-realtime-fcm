@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
 
-    public function fire_notification()
+    public function fire()
     {
-        return view('fire-notifications');
+        $notifications = Notification::count();
+        return view('notifications.fire', compact('notifications'));
     }
 
-    public function get_notification(Request $request)
+    public function store(Request $request)
     {
+        Notification::create();
         return response()->json([
             'data' => ['notif' => true],
             'status' => 200,
@@ -21,8 +24,9 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function show_notification(Request $request)
+    public function show(Request $request)
     {
-        return view('show-notifications');
+        $notifications = Notification::latest()->get();
+        return view('notifications.show', compact('notifications'));
     }
 }

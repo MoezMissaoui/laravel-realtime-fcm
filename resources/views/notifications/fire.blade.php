@@ -15,7 +15,10 @@
                     @endif
                     <button type="submit" id="fire-notification" class="btn btn-primary">Fire</button>
                     <button type="button" class="btn btn-primary">
-                        Notifications <span class="badge badge-light" id="notification-numbers">0</span>
+                        Notifications 
+                        <span class="badge badge-light" id="notification-numbers">
+                            {{ $notifications }}
+                        </span>
                     </button>
                 </div>
             </div>
@@ -31,9 +34,7 @@
 
 
     function fire_notification() {
-        return axios.post("{{  route('get-notification') }}", {
-            test: 'test'
-        }).then(res => {
+        return axios.post("{{  route('store-notification') }}").then(res => {
             return res.data.data.notif;
         })
     }

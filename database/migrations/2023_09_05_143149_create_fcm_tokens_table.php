@@ -16,6 +16,16 @@ class CreateFcmTokensTable extends Migration
         Schema::create('fcm_tokens', function (Blueprint $table) {
             $table->id();
             $table->longText('token');
+
+            $table->text('browser')->nullable();
+            $table->text('browser_version')->nullable();
+            $table->text('device')->nullable();
+            $table->text('device_type')->nullable();
+            $table->text('platform')->nullable();
+            $table->text('is_robot')->nullable();
+            $table->text('ip')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+
             $table->timestamps();
         });
     }

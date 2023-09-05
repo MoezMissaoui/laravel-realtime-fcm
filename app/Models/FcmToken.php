@@ -17,6 +17,13 @@ class FcmToken extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'token'
+        'token',
+        'browser',
+        'browser_version',
+        'device',
+        'device_type',
+        'platform',
+        'is_robot',
+        'ip'
     ];
 }

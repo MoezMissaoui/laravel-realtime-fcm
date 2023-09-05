@@ -23,8 +23,9 @@ class NotificationController extends Controller
     public function store(Request $request)
     {
         $notif = Notification::create();
+        $count = Notification::count();
 
-        $this->broadcast($notif);
+        $this->broadcast($notif, $count);
 
         return response()->json([
             'data' => ['notif' => true],
@@ -40,18 +41,18 @@ class NotificationController extends Controller
     }
 
 
-    private function broadcast($notif)
+    private function broadcast($notif, $count)
     {
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60*20);
 
         $notificationBuilder = new PayloadNotificationBuilder("Notification $notif->id");
         $notificationBuilder->setBody($notif->content)
-                            ->setSound('default');
-                            // ->setClickAction('http://127.0.0.1:8000//');
+                            ->setSound('default')
+                            ->setClickAction('http://127.0.0.1:8000//');
 
         $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData($notif->toArray());
+        $dataBuilder->addData($notif->toArray() + ['count' => $count]);
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();

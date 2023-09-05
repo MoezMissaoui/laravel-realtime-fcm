@@ -39,13 +39,21 @@
         })
     }
 
+    function store_fcmtoken(token) {
+        return axios.post("{{  route('store-fcmtoken') }}", {
+            token
+        }).then(res => {
+            return res.data.data.notif;
+        })
+    }
+
 
     $( "#fire-notification" ).click(function() {
         let notif = fire_notification()
-        if (notif) {
-            let numbers = parseInt($('#notification-numbers').text());
-            $('#notification-numbers').text(numbers+1);
-        }
+        // if (notif) {
+        //     let numbers = parseInt($('#notification-numbers').text());
+        //     $('#notification-numbers').text(numbers+1);
+        // }
     });
 
     // Initialize Firebase Cloud Messaging and get a reference to the service
@@ -57,7 +65,7 @@
     messaging.getToken().then((currentToken) => {
         if (currentToken) {
             // Send the token to your server and update the UI if necessary
-            console.log(currentToken);
+            store_fcmtoken(currentToken)
         } else {
             alert('You should allow notifications!');
         }

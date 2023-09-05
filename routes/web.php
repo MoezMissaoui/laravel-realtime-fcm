@@ -24,3 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/notification/fire', [App\Http\Controllers\NotificationController::class, 'fire'])->name('fire-notification');
 Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'show'])->name('show-notifications');
 Route::post('/notification/store', [App\Http\Controllers\NotificationController::class, 'store'])->name('store-notification');
+
+Route::post('/fcmtoken', [App\Http\Controllers\FcmTokenController::class, 'store'])->name('store-fcmtoken');
+

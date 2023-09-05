@@ -40,7 +40,6 @@ class NotificationController extends Controller
         return view('notifications.show', compact('notifications'));
     }
 
-
     private function broadcast($notif, $count)
     {
         $optionBuilder = new OptionsBuilder();
@@ -49,7 +48,7 @@ class NotificationController extends Controller
         $notificationBuilder = new PayloadNotificationBuilder("Notification $notif->id");
         $notificationBuilder->setBody($notif->content)
                             ->setSound('default')
-                            ->setClickAction('http://127.0.0.1:8000//');
+                            ->setClickAction('http://127.0.0.1:8000/');
 
         $dataBuilder = new PayloadDataBuilder();
         $dataBuilder->addData($notif->toArray() + ['count' => $count]);
@@ -65,4 +64,5 @@ class NotificationController extends Controller
 
         return $downstreamResponse->numberSuccess();
     }
+    
 }

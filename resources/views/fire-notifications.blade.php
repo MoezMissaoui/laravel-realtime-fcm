@@ -29,24 +29,40 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 
-    $(document).ready(function() {
-        $( "#fire-notification" ).click(function() {
-            var api = "{{  route('get-notification') }}";
-            $.ajax({
-                url: api,
-                type: 'POST',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                dataType: 'json',
-                success: function (data) {
-                    var notif = data.data.notif
 
-                    if (notif) {
-                        let numbers = parseInt($('#notification-numbers').text());
-                        $('#notification-numbers').text(numbers+1);
-                    }
-                }
-            });
-        });
+    function fire_notification() {
+        return axios.post("{{  route('get-notification') }}", {
+            test: 'test'
+        }).then(res => {
+            return res.data.data.notif;
+        })
+    }
+
+
+    $( "#fire-notification" ).click(function() {
+        let notif = fire_notification()
+        if (notif) {
+            let numbers = parseInt($('#notification-numbers').text());
+            $('#notification-numbers').text(numbers+1);
+        }
+    });
+
+    // Initialize Firebase Cloud Messaging and get a reference to the service
+    const messaging = firebase.messaging();
+    messaging.usePublicVapidKey('BNQPQsfA6L1PTdtRrn1djQAQXM90ivedxBXjHv-uJNKKllJasSJWL3UK_9W6mtLFF2cHGBbByxKH31cqNrP8Fs0');
+
+    // Get registration token. Initially this makes a network call, once retrieved
+    // subsequent calls to getToken will return from cache.
+    messaging.getToken().then((currentToken) => {
+        if (currentToken) {
+            // Send the token to your server and update the UI if necessary
+            console.log(currentToken);
+        } else {
+            alert('You should allow notifications!');
+        }
+    }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+        // ...
     });
 
 

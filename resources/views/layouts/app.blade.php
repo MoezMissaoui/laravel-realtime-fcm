@@ -18,6 +18,30 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Import the functions you need from the SDKs you need -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-messaging.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCxVN2gj-K4XFYrcP65V4O74HW9UcRzFSE",
+          authDomain: "laravel-realtime-fcm.firebaseapp.com",
+          projectId: "laravel-realtime-fcm",
+          storageBucket: "laravel-realtime-fcm.appspot.com",
+          messagingSenderId: "265349239131",
+          appId: "1:265349239131:web:d993260ac566a31bef8a7e"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Import Axios Package -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Import jQuery Package -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -38,6 +62,13 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('fire-notification') }}">{{ __('Fire notification') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('show-notification') }}">{{ __('Show notification') }}</a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

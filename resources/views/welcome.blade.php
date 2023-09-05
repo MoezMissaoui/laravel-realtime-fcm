@@ -27,6 +27,9 @@
                 <a href="{{ route('fire-notification') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">
                     Fire notification
                 </a>
+                <a href="{{ route('show-notification') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">
+                    Show notification
+                </a>
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ url('/home') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Home</a>

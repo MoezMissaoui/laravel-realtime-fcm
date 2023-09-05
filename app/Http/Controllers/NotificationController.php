@@ -6,27 +6,11 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function fire_notification()
     {
         return view('fire-notifications');
     }
-
-
 
     public function get_notification(Request $request)
     {
@@ -35,5 +19,10 @@ class NotificationController extends Controller
             'status' => 200,
             'message' => 'Success',
         ]);
+    }
+
+    public function show_notification(Request $request)
+    {
+        return view('show-notifications');
     }
 }

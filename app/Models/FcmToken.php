@@ -24,6 +24,14 @@ class FcmToken extends Model
         'device_type',
         'platform',
         'is_robot',
-        'ip'
+        'ip',
+        'country_name',
+        'country_code',
+        'region_name',
+        'region_code',
+        'city_name',
+        'zip_code',
+        'latitude',
+        'longitude'
     ];
 }

@@ -19,59 +19,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- Import the functions you need from the SDKs you need -->
-    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-messaging.js"></script>
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyCxVN2gj-K4XFYrcP65V4O74HW9UcRzFSE",
-          authDomain: "laravel-realtime-fcm.firebaseapp.com",
-          projectId: "laravel-realtime-fcm",
-          storageBucket: "laravel-realtime-fcm.appspot.com",
-          messagingSenderId: "265349239131",
-          appId: "1:265349239131:web:d993260ac566a31bef8a7e"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
 
-            // Initialize Firebase Cloud Messaging and get a reference to the service
-            const messaging = firebase.messaging();
-            messaging.usePublicVapidKey('BNQPQsfA6L1PTdtRrn1djQAQXM90ivedxBXjHv-uJNKKllJasSJWL3UK_9W6mtLFF2cHGBbByxKH31cqNrP8Fs0');
-            function store_fcmtoken(token) {
-                return axios.post("{{  route('store-fcmtoken') }}", {
-                    token
-                }).then(res => {
-                    return res.data.data.notif;
-                })
-            }
-            function retreiveToken() {
-                // Get registration token. Initially this makes a network call, once retrieved
-                // subsequent calls to getToken will return from cache.
-                messaging.getToken().then((currentToken) => {
-                    if (currentToken) {
-                        // Send the token to your server and update the UI if necessary
-                        store_fcmtoken(currentToken)
-                    } else {
-                        alert('You should allow notifications!');
-                    }
-                }).catch((err) => {
-                    console.log('An error occurred while retrieving token. ', err);
-                    // ...
-                });
-            }
-            messaging.onTokenRefresh(() => {
-                retreiveToken();
-            });
-            retreiveToken();
 
-    </script>
 
-    <!-- Import Axios Package -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <!-- Import jQuery Package -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 </head>
 <body>
@@ -141,6 +91,59 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Import Axios Package -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Import jQuery Package -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Import the functions you need from the SDKs you need -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-messaging.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCxVN2gj-K4XFYrcP65V4O74HW9UcRzFSE",
+          authDomain: "laravel-realtime-fcm.firebaseapp.com",
+          projectId: "laravel-realtime-fcm",
+          storageBucket: "laravel-realtime-fcm.appspot.com",
+          messagingSenderId: "265349239131",
+          appId: "1:265349239131:web:d993260ac566a31bef8a7e"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+            // Initialize Firebase Cloud Messaging and get a reference to the service
+            const messaging = firebase.messaging();
+            messaging.usePublicVapidKey('BNQPQsfA6L1PTdtRrn1djQAQXM90ivedxBXjHv-uJNKKllJasSJWL3UK_9W6mtLFF2cHGBbByxKH31cqNrP8Fs0');
+            function store_fcmtoken(token) {
+                return axios.post("{{  route('store-fcmtoken') }}", {
+                    token
+                }).then(res => {
+                    return res.data.data.notif;
+                })
+            }
+            function retreiveToken() {
+                // Get registration token. Initially this makes a network call, once retrieved
+                // subsequent calls to getToken will return from cache.
+                messaging.getToken().then((currentToken) => {
+                    if (currentToken) {
+                        // Send the token to your server and update the UI if necessary
+                        store_fcmtoken(currentToken)
+                    } else {
+                        alert('You should allow notifications!');
+                    }
+                }).catch((err) => {
+                    console.log('An error occurred while retrieving token. ', err);
+                    // ...
+                });
+            }
+            messaging.onTokenRefresh(() => {
+                retreiveToken();
+            });
+            retreiveToken();
+
+    </script>
     @yield('script')
 </body>
 </html>

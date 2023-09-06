@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FcmToken;
 
+use Stevebauman\Location\Facades\Location;
 use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,10 @@ class FcmTokenController extends Controller
 
     public function store(Request $request)
     {
+
+
+        $currentUserInfo = Location::get($request->ip());
+
         if(!FcmToken::where('token',$request->token)->exists()){
             $device_type = null;
             if (Agent::isMobile()) {
@@ -41,7 +46,15 @@ class FcmTokenController extends Controller
                 'platform'        => Agent::platform(),
                 'is_robot'        => $is_robot,
                 'ip'              => $request->ip(),
-                'system'          => $request->token ?? '',
+
+                'country_name'    => $currentUserInfo->countryName ?? null,
+                'country_code'    => $$currentUserInfo->countryCode ?? null,
+                'region_name'     => $currentUserInfo->regionCode ?? null,
+                'region_code'     => $currentUserInfo->regionName ?? null,
+                'city_name'       => $currentUserInfo->cityName ?? null,
+                'zip_code'        => $currentUserInfo->zipCode ?? null,
+                'latitude'        => $currentUserInfo->latitude ?? null,
+                'longitude'       => $currentUserInfo->longitude ?? null
             ]);
         }
 

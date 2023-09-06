@@ -24,6 +24,16 @@ class CreateFcmTokensTable extends Migration
             $table->text('platform')->nullable();
             $table->text('is_robot')->nullable();
             $table->text('ip')->nullable();
+
+            $table->text('country_name')->nullable();
+            $table->text('country_code')->nullable();
+            $table->text('region_name')->nullable();
+            $table->text('region_code')->nullable();
+            $table->text('city_name')->nullable();
+            $table->text('zip_code')->nullable();
+            $table->text('latitude')->nullable();
+            $table->text('longitude')->nullable();
+
             $table->unsignedBigInteger('user_id')->nullable();
 
             $table->timestamps();

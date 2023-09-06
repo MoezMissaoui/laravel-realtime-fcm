@@ -10,14 +10,10 @@ use Illuminate\Http\Request;
 
 class FcmTokenController extends Controller
 {
-    
-
 
 
     public function store(Request $request)
     {
-
-
         $currentUserInfo = Location::get($request->ip());
 
         if(!FcmToken::where('token',$request->token)->exists()){
